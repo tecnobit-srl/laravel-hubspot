@@ -1,5 +1,5 @@
 {
-    "name": "rossjcooper/laravel-hubspot",
+    "name": "tecnobit/laravel-hubspot",
     "type": "library",
     "license": "MIT",
     "authors": [
@@ -10,21 +10,21 @@
     ],
     "require": {
         "illuminate/support": ">=5.3",
-        "hubspot/hubspot-php": "^3.0"
+        "hubspot/api-client": "^4.0"
     },
     "autoload": {
         "psr-4": {
-            "Rossjcooper\\LaravelHubSpot\\": "src/",
+            "Tecnobit\\LaravelHubSpot\\": "src/",
             "Tests\\": "tests/"
         }
     },
     "extra": {
         "laravel": {
             "providers": [
-                "Rossjcooper\\LaravelHubSpot\\HubSpotServiceProvider"
+                "Tecnobit\\LaravelHubSpot\\HubSpotServiceProvider"
             ],
             "aliases": {
-                "HubSpot": "Rossjcooper\\LaravelHubSpot\\Facades\\HubSpot"
+                "HubSpot": "Tecnobit\\LaravelHubSpot\\Facades\\HubSpot"
             }
         }
     },

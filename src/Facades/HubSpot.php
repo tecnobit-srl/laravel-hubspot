@@ -1,6 +1,6 @@
 <?php
 
-namespace Rossjcooper\LaravelHubSpot\Facades;
+namespace Tecnobit\LaravelHubSpot\Facades;
 
 use Illuminate\Support\Facades\Facade;
 

@@ -1,8 +1,8 @@
 <?php
 
-namespace Rossjcooper\LaravelHubSpot;
+namespace Tecnobit\LaravelHubSpot;
 
-use SevenShores\Hubspot\Factory as Factory;
+use Hubspot\Factory as Factory;
 
 class HubSpot extends Factory
 {

@@ -1,6 +1,6 @@
 <?php
 
-namespace Rossjcooper\LaravelHubSpot;
+namespace Tecnobit\LaravelHubSpot;
 
 use Illuminate\Support\ServiceProvider;
 
@@ -12,12 +12,8 @@ class HubSpotServiceProvider extends ServiceProvider
 	public function register()
 	{
 		//Bind the HubSpot wrapper class
-		$this->app->bind('Rossjcooper\LaravelHubSpot\HubSpot', function ($app) {
-			return HubSpot::create(
-				env('HUBSPOT_API_KEY', config('hubspot.api_key')),
-				null,
-				config('hubspot.client_options', [])
-			);
+		$this->app->bind('Tecnobit\LaravelHubSpot\HubSpot', function ($app) {
+			return HubSpot::createWithApiKey(env('HUBSPOT_API_KEY', config('hubspotbit.api_key')));
 		});
 	}
 
@@ -28,7 +24,7 @@ class HubSpotServiceProvider extends ServiceProvider
 	{
 		// config
 		$this->publishes([
-			__DIR__.'/config/hubspot.php' => config_path('hubspot.php'),
+			__DIR__.'/config/hubspot.php' => config_path('hubspotbit.php'),
 		], 'config');
 	}
 }
