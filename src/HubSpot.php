@@ -2,7 +2,7 @@
 
 namespace Tecnobit\LaravelHubSpot;
 
-use Hubspot\Factory as Factory;
+use HubSpot\Factory as Factory;
 
 class HubSpot extends Factory
 {
