@@ -13,6 +13,6 @@ class HubSpot extends Facade
 	 */
 	protected static function getFacadeAccessor()
 	{
-		return 'Rossjcooper\LaravelHubSpot\HubSpot';
+		return 'Tecnobit\LaravelHubSpot\HubSpot';
 	}
 }
