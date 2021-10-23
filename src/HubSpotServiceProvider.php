@@ -29,7 +29,7 @@ class HubSpotServiceProvider extends ServiceProvider
                     )
                 );
                 $client = new \GuzzleHttp\Client(['handler' => $handlerStack]);
-                return Factory::createWithAccessToken(config('hubspot.api_key'),$client);
+                return Factory::createWithAccessToken(config('hubspot.access_token'),$client);
             }
 		});
 	}
