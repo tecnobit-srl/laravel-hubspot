@@ -3,6 +3,7 @@
 namespace Tecnobit\LaravelHubSpot;
 
 use Illuminate\Support\ServiceProvider;
+use HubSpot\Factory;
 
 class HubSpotServiceProvider extends ServiceProvider
 {
@@ -12,8 +13,24 @@ class HubSpotServiceProvider extends ServiceProvider
 	public function register()
 	{
 		//Bind the HubSpot wrapper class
-		$this->app->bind('Tecnobit\LaravelHubSpot\HubSpot', function ($app) {
-			return HubSpot::createWithApiKey(env('HUBSPOT_API_KEY', config('hubspotbit.api_key')));
+		$this->app->singleton(HubSpot::class, function () {
+		    if(config('hubspot.api_key')){
+			    return Factory::createWithApiKey(config('hubspot.api_key'));
+            }else{
+                $handlerStack = \GuzzleHttp\HandlerStack::create();
+                $handlerStack->push(
+                    \HubSpot\RetryMiddlewareFactory::createRateLimitMiddleware(
+                        \HubSpot\Delay::getConstantDelayFunction()
+                    )
+                );
+                $handlerStack->push(
+                    \HubSpot\RetryMiddlewareFactory::createInternalErrorsMiddleware(
+                        \HubSpot\Delay::getExponentialDelayFunction(2)
+                    )
+                );
+                $client = new \GuzzleHttp\Client(['handler' => $handlerStack]);
+                return Factory::createWithAccessToken(config('hubspot.api_key'),$client);
+            }
 		});
 	}
 
@@ -24,7 +41,7 @@ class HubSpotServiceProvider extends ServiceProvider
 	{
 		// config
 		$this->publishes([
-			__DIR__.'/config/hubspot.php' => config_path('hubspotbit.php'),
+			__DIR__.'/config/hubspot.php' => config_path('hubspot.php'),
 		], 'config');
 	}
 }
