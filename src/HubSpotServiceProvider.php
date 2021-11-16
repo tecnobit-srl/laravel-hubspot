@@ -14,21 +14,21 @@ class HubSpotServiceProvider extends ServiceProvider
 	{
 		//Bind the HubSpot wrapper class
 		$this->app->singleton(HubSpot::class, function () {
+			$handlerStack = \GuzzleHttp\HandlerStack::create();
+			$handlerStack->push(
+				\HubSpot\RetryMiddlewareFactory::createRateLimitMiddleware(
+					\HubSpot\Delay::getConstantDelayFunction()
+				)
+			);
+			$handlerStack->push(
+				\HubSpot\RetryMiddlewareFactory::createInternalErrorsMiddleware(
+					\HubSpot\Delay::getExponentialDelayFunction(2)
+				)
+			);
+			$client = new \GuzzleHttp\Client(['handler' => $handlerStack]);
 		    if(config('hubspot.api_key')){
-			    return Factory::createWithApiKey(config('hubspot.api_key'));
+			    return Factory::createWithApiKey(config('hubspot.api_key'), $client);
             }else{
-                $handlerStack = \GuzzleHttp\HandlerStack::create();
-                $handlerStack->push(
-                    \HubSpot\RetryMiddlewareFactory::createRateLimitMiddleware(
-                        \HubSpot\Delay::getConstantDelayFunction()
-                    )
-                );
-                $handlerStack->push(
-                    \HubSpot\RetryMiddlewareFactory::createInternalErrorsMiddleware(
-                        \HubSpot\Delay::getExponentialDelayFunction(2)
-                    )
-                );
-                $client = new \GuzzleHttp\Client(['handler' => $handlerStack]);
                 return Factory::createWithAccessToken(config('hubspot.access_token'),$client);
             }
 		});
