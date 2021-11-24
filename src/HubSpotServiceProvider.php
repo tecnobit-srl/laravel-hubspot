@@ -27,7 +27,7 @@ class HubSpotServiceProvider extends ServiceProvider
 			);
 			$client = new \GuzzleHttp\Client(['handler' => $handlerStack]);
 		    if(config('hubspot.api_key')){
-			    return Factory::createWithApiKey(config('hubspot.api_key'), $client);
+			    return Factory::createWithApiKey(config('hubspot.api_key'));
             }else{
                 return Factory::createWithAccessToken(config('hubspot.access_token'),$client);
             }
