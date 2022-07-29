@@ -9,7 +9,7 @@
         }
     ],
     "require": {
-        "hubspot/api-client": "^4.0",
+        "hubspot/api-client": "^8.0",
         "illuminate/support": ">=8.0"
     },
     "autoload": {
